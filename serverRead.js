@@ -87,7 +87,7 @@ fs.createReadStream('./data.csv')
       "Campimages2" : "",
       "Campimages3" : ""
     }
-    let save = new Model(obj);
+    var save = new Model(obj);
      save.save().then(res=>{
       console.log("Saved saved ",res)
     });
