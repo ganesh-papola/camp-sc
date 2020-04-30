@@ -1,6 +1,6 @@
 const csv = require('csv-parser');
 const fs = require('fs');
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
  mongoose.connection.openUri('mongodb://localhost:27017/FreeCampAus').then(() => {
     console.log('Connected to DB!');
