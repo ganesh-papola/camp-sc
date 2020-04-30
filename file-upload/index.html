@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Free camp tool</title>
+	<style>
+		.slect-box {
+			margin-top: 50px;
+			margin-left:  0;
+		}
+
+		#select {
+			width: 450px;
+			margin-left: 15px;
+		}
+		#delect {
+			width: 450px;
+			margin-left: 15px;
+		}
+		.delect-text{
+			margin-top: 30px;
+		}
+
+		#filez {
+			width: 100%;
+		}
+
+		.select {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			color: #555;
+		}
+
+		.select select {
+			display: inline-block;
+			width: 100%;
+			margin: 0;
+			padding: .5rem 2.25rem .5rem 1rem;
+			line-height: 1.5;
+			color: #555;
+			background-color: #eee;
+			border: 0;
+			border: 1px solid #D0D0D0;
+			border-radius: .25rem;
+			cursor: pointer;
+			outline: 0;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+		}
+
+		/* Undo the Firefox inner focus ring */
+		.select select:focus:-moz-focusring {
+			color: transparent;
+			text-shadow: 0 0 0 #000;
+		}
+
+		/* Dropdown arrow */
+		.select:after {
+			position: absolute;
+			top: 50%;
+			right: 1.25rem;
+			display: inline-block;
+			content: "";
+			width: 0;
+			height: 0;
+			margin-top: -.15rem;
+			pointer-events: none;
+			border-top: .35rem solid;
+			border-right: .35rem solid transparent;
+			border-bottom: .35rem solid transparent;
+			border-left: .35rem solid transparent;
+		}
+
+		/* Hover state */
+		/* Uncomment if you need it, but be aware of the sticky iOS states.
+.select select:hover {
+  background-color: #ddd;
+}
+*/
+
+		/* Focus */
+		.select select:focus {
+			box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #3fa46a;
+		}
+
+		/* Active/open */
+		.select select:active {
+			color: #fff;
+			background-color: #3fa46a;
+		}
+
+		/* Hide the arrow in IE10 and up */
+		.select select::-ms-expand {
+			display: none;
+		}
+
+		.button {
+			margin-top: 30px;
+			height: 40px;
+			width: 150px;
+		}
+
+		.file-upload {
+			display: block;
+			text-align: center;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 12px;
+		}
+
+		.file-upload .file-select {
+			display: block;
+			border: 2px solid #dce4ec;
+			color: #34495e;
+			cursor: pointer;
+			height: 40px;
+			line-height: 40px;
+			text-align: left;
+			background: #FFFFFF;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.file-upload .file-select .file-select-button {
+			background: #dce4ec;
+			padding: 0 10px;
+			display: inline-block;
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.file-upload .file-select .file-select-name {
+			line-height: 40px;
+			display: inline-block;
+			padding: 0 10px;
+		}
+
+		.file-upload .file-select:hover {
+			border-color: #34495e;
+			transition: all .2s ease-in-out;
+			-moz-transition: all .2s ease-in-out;
+			-webkit-transition: all .2s ease-in-out;
+			-o-transition: all .2s ease-in-out;
+		}
+
+		.file-upload .file-select:hover .file-select-button {
+			background: #34495e;
+			color: #FFFFFF;
+			transition: all .2s ease-in-out;
+			-moz-transition: all .2s ease-in-out;
+			-webkit-transition: all .2s ease-in-out;
+			-o-transition: all .2s ease-in-out;
+		}
+
+		.file-upload.active .file-select {
+			border-color: #3fa46a;
+			transition: all .2s ease-in-out;
+			-moz-transition: all .2s ease-in-out;
+			-webkit-transition: all .2s ease-in-out;
+			-o-transition: all .2s ease-in-out;
+		}
+
+		.file-upload.active .file-select .file-select-button {
+			background: #3fa46a;
+			color: #FFFFFF;
+			transition: all .2s ease-in-out;
+			-moz-transition: all .2s ease-in-out;
+			-webkit-transition: all .2s ease-in-out;
+			-o-transition: all .2s ease-in-out;
+		}
+
+		.file-upload .file-select input[type=file] {
+			z-index: 100;
+			cursor: pointer;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+
+		.file-upload .file-select.file-select-disabled {
+			opacity: 0.65;
+		}
+
+		.file-upload .file-select.file-select-disabled:hover {
+			cursor: default;
+			display: block;
+			border: 2px solid #dce4ec;
+			color: #34495e;
+			cursor: pointer;
+			height: 40px;
+			line-height: 40px;
+			margin-top: 5px;
+			text-align: left;
+			background: #FFFFFF;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.file-upload .file-select.file-select-disabled:hover .file-select-button {
+			background: #dce4ec;
+			color: #666666;
+			padding: 0 10px;
+			display: inline-block;
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.file-upload .file-select.file-select-disabled:hover .file-select-name {
+			line-height: 40px;
+			display: inline-block;
+			padding: 0 10px;
+		}
+		.delect-box {
+			margin-top: -100px;
+		}
+		#result{
+			margin-top: 10px;
+		}
+		.progress{
+			margin-top: 10px;
+			margin-left: -15px;
+		}
+		#progress {
+			display:  none;
+		}
+	</style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		$(function () {
+			var flag = true;
+			$('#filez').change(function () {
+				var file = $('#filez')[0].files[0];
+				var filename = file.name;
+				if (filename)
+				document.getElementById("noFile").innerHTML = filename
+				else {
+					// $(".file-upload").addClass('active');
+					// $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+				}
+				var reader = new FileReader();
+				reader.onload = function (event) {
+					var data = reader.result;
+					$('.gen-preview').html('<p><b>Preview</b></p>');
+					$('.thumb').attr('src', data);
+				}
+				reader.readAsDataURL(file);
+			});
+			
+
+			var socket = io('http://localhost:3693');
+			socket.on('connect', function () {
+				socket.on("finished_123k#870989877w7&4red#$976", function(status){
+					document.getElementById("result").innerHTML =  'upload success';
+					document.getElementById("progress").style.display = "none";
+					flag = true;
+				})
+			})
+
+
+			$('#form').submit(function (e) {
+				e.preventDefault();
+				if(flag){
+				flag = false;
+				var testz = new FormData();
+				var select = $('#select').val();
+				if (!select) return alert("Please select model type..")
+				testz.append('filez', $('#filez')[0].files[0]);
+				testz.append('select', select);
+				$.ajax({
+					url: '/',
+					data: testz,
+					processData: false,
+					contentType: false,
+					beforeSend: function () {
+						 document.getElementById("result").innerHTML =  'uploading data from file, this may take several minutes (depending upon file size)...';
+						 document.getElementById("progress").style.display = "flex"
+					},
+					method: 'POST',
+					success: function (res) {
+						alert("Success!");
+						document.getElementById("result").innerHTML =  'upload success';
+						document.getElementById("progress").style.display = "none";
+						flag = true;
+					}
+				})
+			}
+			});
+
+		})
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="text-center">DB uploader</h1>
+		<hr>
+		<div>
+			<p></p>
+
+			<p class="text-muted">
+				Please select a csv file
+			</p>
+		</div>
+		<form role="form" class="form-inline" method="post" enctype="multipart/form-data" id="form">
+			<div class="form-group">
+				<div class="file-upload col-lg-6">
+					<div class="file-select">
+						<div class="file-select-button" id="fileName">Choose File</div>
+						<p class="file-select-name" id="noFile"></p>
+						<input type="file" name="filez" accept="csv" id="filez" class="form-control" />
+					</div>
+				</div>
+				<div class="row col-lg-6 select">
+					<select class="form-control" name="select" id="select">
+						<option value="">Please select model type</option>
+						<option value="Attractions">Attractions</option>
+						<option value="Campsites">Campsites</option>
+						<option value="Picnic">BBQ/Picnic</option>
+						<option value="paidCampsites">Paid Campsite</option>
+						<option value="paidAttractions">Paid Attractions</option>
+						<option value="Showers">Shower</option>
+						<option value="Toilets">Toilet</option>
+					</select>
+			</div>
+			</div>
+			<!-- <div class="col-lg-12" ></div> -->
+			
+			<div class="col-lg-12" ></div>
+			<div class="row col-lg-8">
+				<input type="submit" value="Upload" class="btn btn-success btn-sm button" />
+			</div>
+			
+			<div class="col-lg-6">
+				<div class="progress"id="progress" >
+					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+					aria-valuenow="99.99" aria-valuemin="0" aria-valuemax="100" style="width: 99.99%"></div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<p class="text-muted" id="result"></p>
+			</div>
+			
+		</form>
+		<br>
+		<div class="row"></div>
+		<hr>
+		<div class="row"></div>
+		<div class="col-lg-12">
+			<p class="text-muted delect-text" >
+				Please select a collection to delete all records in db
+			</p>
+			<div class="row col-lg-5 select">
+					<select class="form-control" name="delect" id="delect">
+						<option value="">Please select model type</option>
+						<option value="Attractions">Attractions</option>
+						<option value="Campsites">Campsites</option>
+						<option value="Picnic">BBQ/Picnic</option>
+						<option value="paidCampsites">Paid Campsite</option>
+						<option value="paidAttractions">Paid Attractions</option>
+						<option value="Showers">Shower</option>
+						<option value="Toilets">Toilet</option>
+					</select>
+			</div>
+			<input type="button" id="delete" onclick="onDelete()" value="Delete All Records" class="btn btn-success btn-sm button" />
+		</div>
+	</div>
+<script>
+		function onDelete(){
+			var delect = $("#delect").val();
+			if(!delect)
+			return alert("Please select a collection to delete all at once")
+  		var r = confirm(`Please confirm to delete all records from ${delect} collection`);
+    	if(r){
+			console.log("delecet ",delect)
+			$.ajax({
+					url: '/delete',
+					data: JSON.stringify({ type : delect}),
+					contentType: 'application/json',
+					method: 'POST',
+					success: function (res) {
+						console.log(res);
+						alert("Deleted successfully");
+					}
+				})
+		}
+  
+		}
+</script>
+
+</body>
+
+</html>
