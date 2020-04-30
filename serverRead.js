@@ -70,7 +70,7 @@ const schema = new Schema({
 var arr = [];
 fs.createReadStream('./data.csv')
   .pipe(csv())
-  .on('data', async (row) => {
+  .on('data', (row) => {
     var fac = [];
     var obj = {
       placeName : row.Name,
@@ -88,9 +88,11 @@ fs.createReadStream('./data.csv')
       "Campimages3" : ""
     }
     let save = new Model(obj);
-    const res = await save.save();
+     save.save().then(res=>{
+      console.log("Saved saved ",res)
+    });
 
-    console.log("Saved saved ",res)
+    
     // arr.push(obj);
   })
   .on('end', () => {
