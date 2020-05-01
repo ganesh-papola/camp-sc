@@ -108,7 +108,6 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 })
 var handleMongo = function(fileName, Type, cb){
-	console.log("filename ", fileName,Type);
 	if (!fileName || !Type){
 		return cb("failed")
 	}
@@ -134,7 +133,7 @@ var handleMongo = function(fileName, Type, cb){
     }
     var save = new Model(obj);
      save.save().then(res=>{
-      console.log("Saved saved ",res)
+      // console.log("Saved saved ",res)
     });
 
   })
