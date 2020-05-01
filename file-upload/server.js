@@ -8,13 +8,13 @@ var http = require('http');
 var app = express();
 
 
-var dir = './uploads';
+var folder = './uploads';
 
-if (!fs.existsSync(dir)){
-		fs.mkdirSync(dir);
-		fs.chmod(dir, '755', function(){
-			console.log("folder created");
-		})
+if (!fs.existsSync(folder)){
+	fs.mkdir(__dirname + folder, 757, function(err){
+		if (err) console.log("Failed to create file at " + __dirname + folder);
+		else console.log("created ",folder," folder")
+	});
 }
 app.use(bodyParser.urlencoded({
 	extended: true
