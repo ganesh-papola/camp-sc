@@ -8,7 +8,7 @@ var http = require('http');
 var app = express();
 
 
-var folder = './uploads';
+var folder = '/uploads';
 
 if (!fs.existsSync(folder)){
 	fs.mkdir(__dirname + folder, 757, function(err){
