@@ -11,7 +11,7 @@ var app = express();
 var folder = '/uploads';
 
 if (!fs.existsSync(folder)){
-	fs.mkdir(__dirname + folder, 757, function(err){
+	fs.mkdir(__dirname + folder, 0777, function(err){
 		if (err) console.log("Failed to create file at " + __dirname + folder);
 		else console.log("created ",folder," folder")
 	});
