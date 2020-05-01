@@ -12,7 +12,7 @@ var folder = '/uploads';
 
 if (!fs.existsSync(folder)){
 	fs.mkdir(__dirname + folder, 757, function(err){
-		if (err) console.log("Failed to create file at " + __dirname + folder);
+		if (err) console.log("Failed to create file at " + __dirname + folder, err);
 		else console.log("created ",folder," folder")
 	});
 }
