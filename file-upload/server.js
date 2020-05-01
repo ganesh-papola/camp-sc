@@ -7,6 +7,15 @@ var express = require('express');
 var http = require('http');
 var app = express();
 
+
+var dir = './uploads';
+
+if (!fs.existsSync(dir)){
+		fs.mkdirSync(dir);
+		fs.chmod(dir, '755', function(){
+			console.log("folder created");
+		})
+}
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -14,7 +23,7 @@ app.use(bodyParser.json())
 
 var server = http.createServer(app);
 mongoose.Promise = global.Promise;
- mongoose.connection.openUri('mongodb://localhost:27017/FreeCampAus').then(() => {
+ mongoose.connect('mongodb://localhost:27017/FreeCampAus', { useNewUrlParser: true, useUnifiedTopology: true } ).then(() => {
     console.log('Connected to DB!');
 }).catch((error) => {
     console.log("error ", error);
